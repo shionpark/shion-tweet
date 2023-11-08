@@ -1,3 +1,5 @@
+import useMutation from "@/lib/client/useMutation";
+import { useState } from "react";
 import { useForm } from "react-hook-form";
 
 interface CreateForm {
@@ -6,22 +8,23 @@ interface CreateForm {
   password?: string;
 }
 
-const CreateAccount = () => {
-  const { handleSubmit, register } = useForm();
+const API_USER_ENTER = "/api/users/enter";
 
-  const onValid = (data: CreateForm) => {
-    fetch("/api/users/enter", {
-      body: JSON.stringify(data),
-      headers: {
-        "Content-Type": "application/json",
-      },
-      method: "POST",
-    });
+const CreateAccount = () => {
+  const [enter, { data, error, isLoading }] = useMutation(API_USER_ENTER);
+  const [submitting, setSubmitting] = useState(false);
+  const { handleSubmit, register } = useForm<CreateForm>();
+
+  const onValid = (validForm: CreateForm) => {
+    if (isLoading) return;
+    enter(validForm);
   };
+  console.log(data, isLoading, error);
 
   return (
     <div>
       <h1>계정 만들기</h1>
+      <span>{submitting ? "Loading" : "Clear!"}</span>
       <form onSubmit={handleSubmit(onValid)}>
         <input
           {...register("email")}
