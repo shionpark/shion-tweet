@@ -9,7 +9,15 @@ interface CreateForm {
 const CreateAccount = () => {
   const { handleSubmit, register } = useForm();
 
-  const onValid = (data: CreateForm) => {};
+  const onValid = (data: CreateForm) => {
+    fetch("/api/users/enter", {
+      body: JSON.stringify(data),
+      headers: {
+        "Content-Type": "application/json",
+      },
+      method: "POST",
+    });
+  };
 
   return (
     <div>
