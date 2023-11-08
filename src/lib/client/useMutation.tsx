@@ -13,12 +13,8 @@ const useMutation = (url: string): useMutationResult => {
     error: undefined,
     isLoading: false,
   });
-  //   const [data, setData] = useState<undefined | any>(undefined);
-  //   const [error, setError] = useState<undefined | any>(undefined);
-  //   const [isLoading, setIsLoading] = useState(false);
   const mutation = (data: any) => {
     setState((prev) => ({ ...prev, isLoading: true }));
-    // setIsLoading(true);
     fetch(url, {
       body: JSON.stringify(data),
       headers: {
@@ -32,18 +28,6 @@ const useMutation = (url: string): useMutationResult => {
       .finally(() => setState((prev) => ({ ...prev, isLoading: false })));
   };
   return [mutation, { ...state }];
-  //   return [mutation, { data, error, isLoading }];
 };
 
 export default useMutation;
-
-// setSubmitting(true);
-// fetch("/api/users/enter", {
-//   body: JSON.stringify(data),
-//   headers: {
-//     "Content-Type": "application/json",
-//   },
-//   method: "POST",
-// }).then(() => {
-//   setSubmitting(false);
-// });
