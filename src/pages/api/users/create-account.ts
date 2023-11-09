@@ -1,36 +1,26 @@
 import client from "@/lib/server/client";
-import withHandler from "@/lib/server/withHandler";
+import withHandler, { ResponseType } from "@/lib/server/withHandler";
 import bcrypt from "bcrypt";
 import { NextApiRequest, NextApiResponse } from "next";
 
-const handler = async (req: NextApiRequest, res: NextApiResponse) => {
-  const { email, name, password } = req.body;
+const handler = async (
+  req: NextApiRequest,
+  res: NextApiResponse<ResponseType>
+) => {
+  const { email, name } = req.body;
 
-  if (!email || !name) {
-    return res.status(404).end();
-  }
-
-  const user = await client.user.findUnique({
+  const payload = email ? { email } : { name };
+  const user = await client.user.upsert({
     where: {
-      email: email,
+      email: email || undefined,
     },
-  });
-
-  if (user) {
-    return res.status(409).end();
-  }
-
-  const hashedPassword = await bcrypt.hash(password, 5);
-
-  await client.user.create({
-    data: {
-      email,
-      name,
-      password: hashedPassword,
+    create: {
+      name: "Anonymous",
+      ...payload,
     },
+    update: {},
   });
-
-  res.status(200).end();
+  console.log(user);
 };
 
 export default withHandler("POST", handler);

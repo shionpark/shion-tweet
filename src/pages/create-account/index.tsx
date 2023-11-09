@@ -8,7 +8,7 @@ interface CreateForm {
   password?: string;
 }
 
-const API_USER_ENTER = "/api/users/enter";
+const API_USER_ENTER = "/api/users/create-account";
 
 const CreateAccount = () => {
   const [enter, { data, error, isLoading }] = useMutation(API_USER_ENTER);
@@ -19,7 +19,6 @@ const CreateAccount = () => {
     if (isLoading) return;
     enter(validForm);
   };
-  console.log(data, isLoading, error);
 
   return (
     <div>
