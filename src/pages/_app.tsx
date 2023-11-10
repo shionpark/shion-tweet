@@ -3,7 +3,7 @@ import type { AppProps } from "next/app";
 import "@/styles/globals.css";
 import { SWRConfig } from "swr";
 
-export default function App({ Component, pageProps }: AppProps) {
+const App = ({ Component, pageProps }: AppProps) => {
   return (
     <SWRConfig
       value={{
@@ -11,7 +11,11 @@ export default function App({ Component, pageProps }: AppProps) {
         refreshInterval: 3000,
       }}
     >
-      <Component {...pageProps} />
+      <div className="w-full max-w-xl mx-auto">
+        <Component {...pageProps} />
+      </div>
     </SWRConfig>
   );
-}
+};
+
+export default App;
