@@ -11,7 +11,7 @@ const App = ({ Component, pageProps }: AppProps) => {
         refreshInterval: 3000,
       }}
     >
-      <div className="w-full max-w-xl mx-auto">
+      <div className="w-full max-w-xl mx-auto h-screen">
         <Component {...pageProps} />
       </div>
     </SWRConfig>

@@ -1,14 +1,14 @@
 import { useState } from "react";
 
-interface UseMutationState {
-  data?: object;
+interface UseMutationState<T> {
+  data?: T;
   error?: object;
   isLoading: boolean;
 }
-type useMutationResult = [(data: any) => void, UseMutationState];
+type UseMutationResult<T> = [(data: any) => void, UseMutationState<T>];
 
-const useMutation = (url: string): useMutationResult => {
-  const [state, setState] = useState({
+function useMutation<T = any>(url: string): UseMutationResult<T> {
+  const [state, setState] = useState<UseMutationState<T>>({
     data: undefined,
     error: undefined,
     isLoading: false,
@@ -28,6 +28,6 @@ const useMutation = (url: string): useMutationResult => {
       .finally(() => setState((prev) => ({ ...prev, isLoading: false })));
   };
   return [mutation, { ...state }];
-};
+}
 
 export default useMutation;
