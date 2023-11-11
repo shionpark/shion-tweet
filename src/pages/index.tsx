@@ -3,7 +3,7 @@ import Layout from "@/components/layout";
 const Home = () => {
   return (
     <Layout hasTabBar title="홈">
-      <div className="bg-orange-100 text-orange-950 flex flex-col w-full space-y-5">
+      <div className="text-gray-900 bg-white flex flex-col w-full space-y-5">
         {[1, 1, 1, 1, 1, 1, 1, 1].map((_, i) => (
           <div
             className="flex px-4 border-b pb-5 cursor-pointer justify-between"

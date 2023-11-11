@@ -11,7 +11,7 @@ const Header = ({ canGoBack, title }: HeaderProps) => {
     router.back();
   };
   return (
-    <div className="text-orange-950 bg-orange-100 text-lg font-medium py-3 border-b border-orange-900 flex justify-center sticky top-0 z-50">
+    <div className="text-gray-900 bg-white text-lg font-medium py-3 border-b shadow-sm flex justify-center sticky top-0 z-50">
       <div>
         {canGoBack ? (
           <button onClick={onClick}>
