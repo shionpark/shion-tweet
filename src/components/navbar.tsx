@@ -1,8 +1,8 @@
 import Link from "next/link";
 
-const Navigation = () => {
+const Navbar = () => {
   return (
-    <nav className="text-gray-900 bg-white space-y-6 w-16 pt-5 flex flex-col justify-between h-full fixed shadow-xl">
+    <nav className="text-gray-900 bg-white w-16 py-6 flex flex-col justify-between h-full fixed shadow-xl">
       <div className="space-y-6">
         <Link className="flex flex-col items-center mb-10" href={"/"}>
           <svg
@@ -20,23 +20,7 @@ const Navigation = () => {
             ></path>
           </svg>
         </Link>
-        <Link className="flex flex-col items-center" href="/">
-          <svg
-            className="w-7 h-7"
-            fill="none"
-            stroke="currentColor"
-            viewBox="0 0 24 24"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path
-              d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth="2"
-            ></path>
-          </svg>
-        </Link>
-        <Link className="flex flex-col items-center" href="/">
+        <Link className="flex flex-col items-center" href="/tweets">
           <svg
             className="w-7 h-7"
             fill="none"
@@ -52,24 +36,44 @@ const Navigation = () => {
             ></path>
           </svg>
         </Link>
-        <Link className="flex flex-col items-center" href="/">
+        <Link className="flex flex-col items-center" href="/search">
           <svg
+            aria-hidden="true"
             className="w-7 h-7"
             fill="none"
             stroke="currentColor"
+            stroke-width="1.5"
             viewBox="0 0 24 24"
             xmlns="http://www.w3.org/2000/svg"
           >
             <path
-              d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z"
-              strokeLinecap="round"
-              strokeLinejoin="round"
+              d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              strokeWidth="2"
+            ></path>
+          </svg>
+        </Link>
+        <Link className="flex flex-col items-center" href="/likes">
+          <svg
+            aria-hidden="true"
+            className="w-7 h-7"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="1.5"
+            viewBox="0 0 24 24"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12z"
+              stroke-linecap="round"
+              stroke-linejoin="round"
               strokeWidth="2"
             ></path>
           </svg>
         </Link>
       </div>
-      <div className="pb-6">
+      <div>
         <Link className="flex flex-col items-center" href="/profile">
           <svg
             className="w-7 h-7"
@@ -91,4 +95,4 @@ const Navigation = () => {
   );
 };
 
-export default Navigation;
+export default Navbar;
