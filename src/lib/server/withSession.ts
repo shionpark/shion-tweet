@@ -14,7 +14,7 @@ declare module "iron-session" {
 }
 const cookieOptions = {
   cookieName: "shion-tweet",
-  password: "shiontweetCookiePassword!!!",
+  password: "shiontweetCookiePassword!!!testtesttest",
 };
 
 export function withApiSession(fn: NextApiHandler) {

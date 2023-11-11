@@ -23,27 +23,20 @@ export default function withHandler({
     req: NextApiRequest,
     res: NextApiResponse<ResponseType>
   ) {
-    if (isPrivate && !req.session.user && req.method !== "POST") {
-      // 로그인이 필요한 경우인데, POST 요청이 아닌 경우에만 401 에러를 반환하도록 변경
-      return res.status(401).json({
-        isSuccess: false,
-        message: "로그인이 필요합니다.",
-      });
+    if (req.method && !methods.includes(req.method as any)) {
+      return res.status(405).end();
     }
-    // if (req.method && !methods.includes(req.method as any)) {
-    //   return res.status(405).end();
-    // }
-    // if (isPrivate && !req.session.user) {
-    //   return res
-    //     .status(401)
-    //     .json({ isSuccess: false, message: "올바르지 않은 접근입니다." });
-    // }
-    // try {
-    //   await handler(req, res);
-    // } catch (error) {
-    //   return res
-    //     .status(500)
-    //     .json({ isSuccess: false, message: JSON.stringify(error) });
-    // }
+    if (isPrivate && !req.session.user) {
+      return res
+        .status(401)
+        .json({ isSuccess: false, message: "올바르지 않은 접근입니다." });
+    }
+    try {
+      await handler(req, res);
+    } catch (error) {
+      return res
+        .status(500)
+        .json({ isSuccess: false, message: JSON.stringify(error) });
+    }
   };
 }

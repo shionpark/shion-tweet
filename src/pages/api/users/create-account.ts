@@ -1,5 +1,6 @@
 import db from "@/lib/server/db";
 import withHandler, { ResponseType } from "@/lib/server/withHandler";
+import { withApiSession } from "@/lib/server/withSession";
 import bcrypt from "bcrypt";
 import { NextApiRequest, NextApiResponse } from "next";
 
@@ -27,17 +28,37 @@ const handler = async (
     });
   }
 
-  const hashedPassword = await bcrypt.hash(password, 10);
-
-  await db.user.create({
-    data: {
-      email,
-      name,
-      password: hashedPassword,
-    },
+  const newUser = await db.$transaction(async (prisma) => {
+    try {
+      const hashedPassword = await bcrypt.hash(password, 10);
+      const createdUser = await prisma.user.create({
+        data: {
+          email,
+          name,
+          password: hashedPassword,
+        },
+      });
+      return createdUser;
+    } catch (error) {
+      console.error("Error creating user:", error);
+      return null;
+    }
   });
+
+  console.log("After user creation", newUser);
+
+  if (!newUser) {
+    return res.status(500).json({
+      isSuccess: false,
+      message: "사용자를 생성하는 도중 오류가 발생했습니다.",
+    });
+  }
+
+  req.session.user = {
+    id: newUser.id,
+  };
 
   return res.status(200).json({ isSuccess: true, message: "회원가입 완료!" });
 };
 
-export default withHandler({ handler, methods: "POST" });
+export default withApiSession(withHandler({ handler, methods: "POST" }));
