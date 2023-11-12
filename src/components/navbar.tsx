@@ -20,7 +20,7 @@ const Navbar = () => {
             ></path>
           </svg>
         </Link>
-        <Link className="flex flex-col items-center" href="/tweets">
+        <Link className="flex flex-col items-center" href="/tweets/post">
           <svg
             className="w-7 h-7"
             fill="none"
