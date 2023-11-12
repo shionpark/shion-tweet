@@ -66,4 +66,6 @@ const handler = async (
   return res.status(200).json({ isSuccess: true, message: "회원가입 완료!" });
 };
 
-export default withApiSession(withHandler({ handler, methods: "POST" }));
+export default withApiSession(
+  withHandler({ handler, isPrivate: false, method: "POST" })
+);

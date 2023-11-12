@@ -6,31 +6,31 @@ export interface ResponseType {
   message?: string;
 }
 
-type method = "GET" | "POST";
+type methods = "GET" | "POST" | "DELETE";
 
 interface ConfigType {
   handler: NextApiHandler;
   isPrivate?: boolean;
-  methods: method;
+  method: methods;
 }
 
 export default function withHandler({
   handler,
   isPrivate = true,
-  methods,
+  method,
 }: ConfigType) {
   return async function (
     req: NextApiRequest,
     res: NextApiResponse
   ): Promise<any> {
-    if (req.method && !methods.includes(req.method as any)) {
+    if (req.method !== method) {
       return res.status(405).end();
     }
-    // if (isPrivate && !req.session.user) {
-    //   return res
-    //     .status(401)
-    //     .json({ isSuccess: false, message: "올바르지 않은 접근입니다." });
-    // }
+    if (isPrivate && !req.session.user) {
+      return res
+        .status(401)
+        .json({ isSuccess: false, message: "올바르지 않은 접근입니다." });
+    }
     try {
       await handler(req, res);
     } catch (error) {
