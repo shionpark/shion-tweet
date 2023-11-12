@@ -9,20 +9,37 @@ interface CreateForm {
   password: string;
 }
 
-interface MutationResult {}
+interface LoginForm {
+  email?: string;
+  password: string;
+}
+
+interface MutationResult {
+  isSuccess: boolean;
+  message: string;
+}
 
 const CreateAccount = () => {
-  const [enter, { data, error, isLoading }] = useMutation(
+  const [enter, { data, error, isLoading }] = useMutation<MutationResult>(
     "/api/users/create-account"
   );
+  const [login, { data: loginData, isLoading: loginLoading }] =
+    useMutation<MutationResult>("/api/users/log-in");
+
   const { handleSubmit, register } = useForm<CreateForm>();
+  const { handleSubmit: loginHandleSubmit, register: loginRegister } =
+    useForm<LoginForm>();
 
   const onValid = (validForm: CreateForm) => {
     if (isLoading) return;
-    console.log(validForm);
     enter(validForm);
   };
-  console.log(data, error, isLoading);
+
+  const onLoginValid = (validForm: LoginForm) => {
+    console.log(validForm.email);
+    if (loginLoading) return;
+    login(validForm);
+  };
 
   return (
     <div className="SCREEN flex flex-col px-4 justify-center items-center rounded-xl bg-white">
@@ -30,41 +47,70 @@ const CreateAccount = () => {
         Enter to Tweet
       </h3>
       <div className="E_CONTAINER p-2">
-        <form
-          className="FORM_CONTAINER flex flex-col  mt-8"
-          onSubmit={handleSubmit(onValid)}
-        >
-          <div className="FORM_INPUTS space-y-3 ">
-            <input
-              {...register("email", { required: true })}
-              className="appearance-none w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-orange-500 focus:border-orange-500"
-              placeholder="Your email"
-              required
-              type="email"
-            />
-            <div className="FORM_INPUT_P_DIV flex bg-black shadow-sm rounded-md">
+        {data?.isSuccess ? (
+          <form
+            className="FORM_CONTAINER flex flex-col  mt-8"
+            onSubmit={loginHandleSubmit(onLoginValid)}
+          >
+            <div className="FORM_INPUTS space-y-3 ">
               <input
-                {...register("name", { required: true })}
+                {...loginRegister("email", { required: true })}
                 className="appearance-none w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-orange-500 focus:border-orange-500"
-                placeholder="Your name"
+                placeholder="Your email"
                 required
-                type="text"
+                type="email"
               />
+              <div className="FORM_INPUT_P_DIV flex bg-black shadow-sm rounded-md">
+                <input
+                  {...loginRegister("password", { required: true })}
+                  className="appearance-none w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-orange-500 focus:border-orange-500"
+                  placeholder="Your password"
+                  required
+                  type="string"
+                />
+              </div>
             </div>
-            <div className="FORM_INPUT_P_DIV flex bg-black shadow-sm rounded-md">
+            <button className="FORM_ENTER_BTN bg-orange-500 hover:bg-orange-600 mt-5 py-2 px-4 border border-transparent rounded-md text-white focus:ring-2 focus:ring-offset-2 focus:ring-orange-500 focus:outline-none">
+              Create Account
+            </button>
+          </form>
+        ) : (
+          <form
+            className="FORM_CONTAINER flex flex-col  mt-8"
+            onSubmit={handleSubmit(onValid)}
+          >
+            <div className="FORM_INPUTS space-y-3 ">
               <input
-                {...register("password", { required: true })}
+                {...register("email", { required: true })}
                 className="appearance-none w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-orange-500 focus:border-orange-500"
-                placeholder="Your password"
+                placeholder="Your email"
                 required
-                type="string"
+                type="email"
               />
+              <div className="FORM_INPUT_P_DIV flex bg-black shadow-sm rounded-md">
+                <input
+                  {...register("name", { required: true })}
+                  className="appearance-none w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-orange-500 focus:border-orange-500"
+                  placeholder="Your name"
+                  required
+                  type="text"
+                />
+              </div>
+              <div className="FORM_INPUT_P_DIV flex bg-black shadow-sm rounded-md">
+                <input
+                  {...register("password", { required: true })}
+                  className="appearance-none w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-orange-500 focus:border-orange-500"
+                  placeholder="Your password"
+                  required
+                  type="string"
+                />
+              </div>
             </div>
-          </div>
-          <button className="FORM_ENTER_BTN bg-orange-500 hover:bg-orange-600 mt-5 py-2 px-4 border border-transparent rounded-md text-white focus:ring-2 focus:ring-offset-2 focus:ring-orange-500 focus:outline-none">
-            Create Account
-          </button>
-        </form>
+            <button className="FORM_ENTER_BTN bg-orange-500 hover:bg-orange-600 mt-5 py-2 px-4 border border-transparent rounded-md text-white focus:ring-2 focus:ring-offset-2 focus:ring-orange-500 focus:outline-none">
+              Create Account
+            </button>
+          </form>
+        )}
       </div>
     </div>
   );

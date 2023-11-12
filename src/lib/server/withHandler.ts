@@ -21,8 +21,8 @@ export default function withHandler({
 }: ConfigType) {
   return async function (
     req: NextApiRequest,
-    res: NextApiResponse<ResponseType>
-  ) {
+    res: NextApiResponse
+  ): Promise<any> {
     if (req.method && !methods.includes(req.method as any)) {
       return res.status(405).end();
     }

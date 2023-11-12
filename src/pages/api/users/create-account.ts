@@ -45,8 +45,6 @@ const handler = async (
     }
   });
 
-  console.log("After user creation", newUser);
-
   if (!newUser) {
     return res.status(500).json({
       isSuccess: false,
