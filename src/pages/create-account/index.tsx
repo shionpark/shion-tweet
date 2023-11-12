@@ -22,6 +22,7 @@ const CreateAccount = () => {
     console.log(validForm);
     enter(validForm);
   };
+  console.log(data, error, isLoading);
 
   return (
     <div className="SCREEN flex flex-col px-4 justify-center items-center rounded-xl bg-white">
