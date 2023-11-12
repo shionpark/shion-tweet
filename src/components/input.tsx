@@ -19,7 +19,7 @@ const Input = ({ label, name, register, required, type }: InputProps) => {
       </label>
       <div className="rounded-md relative flex  items-center shadow-sm">
         <input
-          className="appearance-none w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-orange-500 focus:border-orange-500"
+          className="appearance-none w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500"
           id={name}
           required={required}
           {...register}

@@ -4,7 +4,10 @@ const Navbar = () => {
   return (
     <nav className="text-gray-900 bg-white w-16 py-6 flex flex-col justify-between h-full fixed shadow-xl">
       <div className="space-y-6">
-        <Link className="flex flex-col items-center mb-10" href={"/"}>
+        <Link
+          className="flex flex-col items-center mb-10 hover:translate-y-[-2px] transition-transform duration-300 ease-in-out"
+          href={"/"}
+        >
           <svg
             className="w-7 h-7"
             fill="none"
@@ -20,7 +23,10 @@ const Navbar = () => {
             ></path>
           </svg>
         </Link>
-        <Link className="flex flex-col items-center" href="/tweets/post">
+        <Link
+          className="flex flex-col items-center hover:translate-y-[-2px] transition-transform duration-300 ease-in-out"
+          href="/tweets/post"
+        >
           <svg
             className="w-7 h-7"
             fill="none"
@@ -36,7 +42,10 @@ const Navbar = () => {
             ></path>
           </svg>
         </Link>
-        <Link className="flex flex-col items-center" href="/search">
+        <Link
+          className="flex flex-col items-center hover:translate-y-[-2px] transition-transform duration-300 ease-in-out"
+          href="/search"
+        >
           <svg
             aria-hidden="true"
             className="w-7 h-7"
@@ -54,7 +63,10 @@ const Navbar = () => {
             ></path>
           </svg>
         </Link>
-        <Link className="flex flex-col items-center" href="/likes">
+        <Link
+          className="flex flex-col items-center hover:translate-y-[-2px] transition-transform duration-300 ease-in-out"
+          href="/likes"
+        >
           <svg
             aria-hidden="true"
             className="w-7 h-7"
@@ -74,21 +86,13 @@ const Navbar = () => {
         </Link>
       </div>
       <div>
-        <Link className="flex flex-col items-center" href="/profile">
-          <svg
-            className="w-7 h-7"
-            fill="none"
-            stroke="currentColor"
-            viewBox="0 0 24 24"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path
-              d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth="2"
-            ></path>
-          </svg>
+        <Link
+          className="flex flex-col items-center hover:translate-y-[-2px] transition-transform duration-300 ease-in-out"
+          href="/profile"
+        >
+          <div className="PROFILE w-12 h-12 shadow-sm border border-gray-200 bg-gray-500 rounded-full hover:animate-spin flex justify-center items-center text-sm">
+            name
+          </div>
         </Link>
       </div>
     </nav>
