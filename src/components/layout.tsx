@@ -13,7 +13,7 @@ interface LayoutProps {
 const Layout = ({ canGoBack, children, hasTabBar, title }: LayoutProps) => {
   return (
     <div className="flex text-gray-900 bg-white border border-gray-100 rounded-sm h-screen">
-      {hasTabBar ? <Navbar /> : null}
+      {canGoBack ? null : hasTabBar && <Navbar />}
       <div className="flex flex-col pl-16 w-full">
         <Header canGoBack={canGoBack} title={title} />
         <div className={cls(hasTabBar ? "pt-6" : "")}>{children}</div>
