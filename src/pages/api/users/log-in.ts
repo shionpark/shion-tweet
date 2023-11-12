@@ -32,9 +32,9 @@ const handler = async (
   req.session.user = { id: user.id };
   await req.session.save();
 
-  return res.status(200).json({ isSuccess: true, user });
+  return res.status(200).json({ isSuccess: true, message: "로그인 완료!" });
 };
 
 export default withApiSession(
-  withHandler({ handler, isPrivate: false, method: "POST" })
+  withHandler({ handler, isPrivate: false, methods: ["POST"] })
 );

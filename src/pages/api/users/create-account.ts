@@ -8,18 +8,12 @@ const handler = async (
   req: NextApiRequest,
   res: NextApiResponse<ResponseType>
 ) => {
-  const { email, name, password, confirmPassword } = req.body;
+  const { email, name, password } = req.body;
 
-  if (!email || !name || !password || !confirmPassword) {
+  if (!email || !name || !password) {
     return res
       .status(404)
       .json({ isSuccess: false, message: "올바르지 않은 입력입니다." });
-  }
-
-  if (password !== confirmPassword) {
-    return res
-      .status(400)
-      .json({ isSuccess: false, message: "비밀번호가 일치하지 않습니다" });
   }
 
   const user = await db.user.findUnique({
@@ -27,7 +21,6 @@ const handler = async (
       email: email,
     },
   });
-
   if (user) {
     return res.status(409).json({
       isSuccess: false,
@@ -66,6 +59,4 @@ const handler = async (
   return res.status(200).json({ isSuccess: true, message: "회원가입 완료!" });
 };
 
-export default withApiSession(
-  withHandler({ handler, isPrivate: false, method: "POST" })
-);
+export default withApiSession(withHandler({ handler, methods: ["POST"] }));

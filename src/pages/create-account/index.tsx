@@ -9,7 +9,6 @@ interface CreateForm {
   email: string;
   name: string;
   password: string;
-  confirmPassword: string;
 }
 
 interface LoginForm {
@@ -111,14 +110,6 @@ const CreateAccount = () => {
                 register={register("password", { required: true })}
                 required
                 type="password"
-              />
-              <Input
-                label="Confirm Password"
-                name="confirmPassword"
-                placeholder="Confirm password"
-                register={register("confirmPassword", { required: true })}
-                required
-                type="confirmPassword"
               />
             </div>
             <Button text={isLoading ? "Loading" : "Join"} />
