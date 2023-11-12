@@ -1,12 +1,15 @@
+import Button from "@/components/button";
+import Input from "@/components/input";
 import useMutation from "@/lib/client/useMutation";
 import { cls } from "@/lib/utils";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 
 interface CreateForm {
-  email?: string;
-  name?: string;
+  email: string;
+  name: string;
   password: string;
+  confirmPassword: string;
 }
 
 interface LoginForm {
@@ -33,82 +36,92 @@ const CreateAccount = () => {
   const onValid = (validForm: CreateForm) => {
     if (isLoading) return;
     enter(validForm);
+    console.log(data);
   };
 
   const onLoginValid = (validForm: LoginForm) => {
-    console.log(validForm.email);
     if (loginLoading) return;
     login(validForm);
+    console.log(loginData);
   };
 
   return (
     <div className="SCREEN flex flex-col px-4 justify-center items-center rounded-xl bg-white">
-      <h3 className="E_TITLE font-extrabold text-3xl pt-16 text-center">
-        Enter to Tweet
-      </h3>
+      {data?.isSuccess ? (
+        <h3 className="E_TITLE font-extrabold text-3xl pt-16 text-center">
+          Login
+        </h3>
+      ) : (
+        <h3 className="E_TITLE font-extrabold text-3xl pt-16 text-center">
+          Enter to Tweet
+        </h3>
+      )}
       <div className="E_CONTAINER p-2">
         {data?.isSuccess ? (
           <form
-            className="FORM_CONTAINER flex flex-col  mt-8"
+            className="FORM_CONTAINER flex flex-col mt-8"
             onSubmit={loginHandleSubmit(onLoginValid)}
           >
-            <div className="FORM_INPUTS space-y-3 ">
-              <input
-                {...loginRegister("email", { required: true })}
-                className="appearance-none w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-orange-500 focus:border-orange-500"
+            <div className="FORM_INPUT_P_DIV fle shadow-sm rounded-md space-y-3 mb-5">
+              <Input
+                label="Email"
+                name="email"
                 placeholder="Your email"
+                register={register("email", { required: true })}
                 required
                 type="email"
               />
-              <div className="FORM_INPUT_P_DIV flex bg-black shadow-sm rounded-md">
-                <input
-                  {...loginRegister("password", { required: true })}
-                  className="appearance-none w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-orange-500 focus:border-orange-500"
-                  placeholder="Your password"
-                  required
-                  type="string"
-                />
-              </div>
+              <Input
+                label="Password"
+                name="password"
+                placeholder="Your password"
+                register={register("password", { required: true })}
+                required
+                type="password"
+              />
             </div>
-            <button className="FORM_ENTER_BTN bg-orange-500 hover:bg-orange-600 mt-5 py-2 px-4 border border-transparent rounded-md text-white focus:ring-2 focus:ring-offset-2 focus:ring-orange-500 focus:outline-none">
-              Create Account
-            </button>
+            <Button text={loginLoading ? "Loading" : "Log In"} />
           </form>
         ) : (
           <form
             className="FORM_CONTAINER flex flex-col  mt-8"
             onSubmit={handleSubmit(onValid)}
           >
-            <div className="FORM_INPUTS space-y-3 ">
-              <input
-                {...register("email", { required: true })}
-                className="appearance-none w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-orange-500 focus:border-orange-500"
+            <div className="FORM_INPUTS space-y-3 mb-5">
+              <Input
+                label="Email"
+                name="email"
                 placeholder="Your email"
+                register={register("email", { required: true })}
                 required
                 type="email"
               />
-              <div className="FORM_INPUT_P_DIV flex bg-black shadow-sm rounded-md">
-                <input
-                  {...register("name", { required: true })}
-                  className="appearance-none w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-orange-500 focus:border-orange-500"
-                  placeholder="Your name"
-                  required
-                  type="text"
-                />
-              </div>
-              <div className="FORM_INPUT_P_DIV flex bg-black shadow-sm rounded-md">
-                <input
-                  {...register("password", { required: true })}
-                  className="appearance-none w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-orange-500 focus:border-orange-500"
-                  placeholder="Your password"
-                  required
-                  type="string"
-                />
-              </div>
+              <Input
+                label="Name"
+                name="name"
+                placeholder="Your name"
+                register={register("name", { required: true })}
+                required
+                type="name"
+              />
+              <Input
+                label="Password"
+                name="password"
+                placeholder="Your password"
+                register={register("password", { required: true })}
+                required
+                type="password"
+              />
+              <Input
+                label="Confirm Password"
+                name="confirmPassword"
+                placeholder="Confirm password"
+                register={register("confirmPassword", { required: true })}
+                required
+                type="confirmPassword"
+              />
             </div>
-            <button className="FORM_ENTER_BTN bg-orange-500 hover:bg-orange-600 mt-5 py-2 px-4 border border-transparent rounded-md text-white focus:ring-2 focus:ring-offset-2 focus:ring-orange-500 focus:outline-none">
-              Create Account
-            </button>
+            <Button text={isLoading ? "Loading" : "Join"} />
           </form>
         )}
       </div>
