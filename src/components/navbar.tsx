@@ -90,7 +90,7 @@ const Navbar = () => {
           className="flex flex-col items-center hover:translate-y-[-2px] transition-transform duration-300 ease-in-out"
           href="/profile"
         >
-          <div className="PROFILE w-12 h-12 shadow-sm border border-gray-200 bg-gray-500 rounded-full hover:animate-spin flex justify-center items-center text-sm">
+          <div className="PROFILE w-12 h-12 shadow-sm border border-gray-200 bg-slate-500 rounded-full hover:animate-spin flex justify-center items-center text-sm">
             name
           </div>
         </Link>

@@ -8,14 +8,38 @@ async function handler(
   res: NextApiResponse<ResponseType>
 ) {
   const { id } = req.query;
+
+  if (id === undefined || id === null) {
+    return res.status(400).json({
+      error: "Tweet ID is required.",
+      isSuccess: false,
+    });
+  }
+
+  const tweetDetail = await db.tweet.findUnique({
+    where: {
+      id: +id.toString(),
+    },
+    include: {
+      user: {
+        select: {
+          id: true,
+          name: true,
+          email: true,
+        },
+      },
+    },
+  });
+
   res.json({
     isSuccess: true,
+    tweetDetail,
   });
 }
 
 export default withApiSession(
   withHandler({
     handler,
-    methods: ["GET", "POST"],
+    methods: ["GET"],
   })
 );

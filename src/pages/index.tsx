@@ -24,6 +24,7 @@ const Home = () => {
           >
             <Item
               comments={1}
+              createdAt={tweet.createdAt}
               hearts={1}
               id={tweet.id}
               key={tweet.id}
@@ -33,6 +34,8 @@ const Home = () => {
                   : tweet.text
               }
               title={tweet.title}
+              email={tweet.user?.email}
+              username={tweet.user?.name}
             />
           </div>
         ))}

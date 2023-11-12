@@ -9,7 +9,18 @@ async function handler(
 ) {
   // 3. 데이터 확인
   if (req.method === "GET") {
-    const tweets = await db.tweet.findMany({});
+    const tweets = await db.tweet.findMany({
+      include: {
+        user: {
+          select: {
+            id: true,
+            name: true,
+            email: true,
+            createdAt: true,
+          },
+        },
+      },
+    });
     res.json({
       isSuccess: true,
       tweets,
@@ -30,6 +41,9 @@ async function handler(
             id: user?.id,
           },
         },
+      },
+      include: {
+        user: true,
       },
     });
     res.json({

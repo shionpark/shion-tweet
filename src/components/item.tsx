@@ -2,28 +2,42 @@ import Link from "next/link";
 
 interface ItemProps {
   comments: number;
+  createdAt: Date;
   hearts: number;
   id: number;
   text: string;
   title: string;
+  email: string;
+  username: string;
 }
 
-export default function Item({ comments, hearts, id, text, title }: ItemProps) {
+export default function Item({
+  comments,
+  createdAt,
+  hearts,
+  id,
+  text,
+  title,
+  email,
+  username,
+}: ItemProps) {
   return (
     <div className="flex flex-col items-center justify-center w-full">
       <div className="flex">
         <div className="L_COL mt-6">
-          <div className="PROFILE w-12 h-12 shadow-sm border border-gray-200 bg-gray-500 rounded-full"></div>
+          <div className="PROFILE w-12 h-12 shadow-sm border border-gray-200 bg-slate-500 rounded-full"></div>
         </div>
         <div className="R_COL flex flex-col ml-4 space-y-1">
           <div className="T_INFO flex text-sm space-x-1 pl-2">
-            <h2 className="font-bold font-gray-900">서영</h2>
-            <span className="text-gray-500">@seoy1108</span>
+            <h2 className="font-bold font-gray-900">{username}</h2>
+            <span className="text-gray-500">@{email.split("@")[0]}</span>
             <p>·</p>
-            <span className="text-gray-500">Nov 9</span>
+            <span className="text-gray-500">
+              {createdAt.toLocaleString().split("T")[0]}
+            </span>
           </div>
           <Link
-            className="T_TEXT rounded-xl bg-gray-200 shadow-sm cursor-pointer hover:translate-y-[-4px] transition-transform duration-300 ease-in-out"
+            className="T_TEXT rounded-xl bg-blue-500 text-white shadow-sm cursor-pointer hover:translate-y-[-4px] transition-transform duration-300 ease-in-out"
             href={`/tweets/${id}`}
           >
             <div className="my-2 px-4">
