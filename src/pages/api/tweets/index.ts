@@ -7,31 +7,41 @@ async function handler(
   req: NextApiRequest,
   res: NextApiResponse<ResponseType>
 ) {
-  const {
-    body: { text, title },
-    session: { user },
-  } = req;
+  // 3. 데이터 확인
+  if (req.method === "GET") {
+    const tweets = await db.tweet.findMany({});
+    res.json({
+      isSuccess: true,
+      tweets,
+    });
+  }
   // 2. 데이터베이스 업데이트
-  const tweet = await db.tweet.create({
-    data: {
-      text,
-      title,
-      user: {
-        connect: {
-          id: user?.id,
+  if (req.method === "POST") {
+    const {
+      body: { text, title },
+      session: { user },
+    } = req;
+    const tweet = await db.tweet.create({
+      data: {
+        text,
+        title,
+        user: {
+          connect: {
+            id: user?.id,
+          },
         },
       },
-    },
-  });
-  res.json({
-    isSuccess: true,
-    tweet,
-  });
+    });
+    res.json({
+      isSuccess: true,
+      tweet,
+    });
+  }
 }
 
 export default withApiSession(
   withHandler({
     handler,
-    methods: ["POST"],
+    methods: ["GET", "POST"],
   })
 );
