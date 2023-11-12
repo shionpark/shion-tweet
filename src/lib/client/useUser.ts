@@ -1,20 +1,19 @@
 import { useRouter } from "next/router";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
+import useSWR from "swr";
+
+// const fetcher = (url: string) => fetch(url).then((response) => response.json());
 
 const useUser = () => {
-  const [user, setUser] = useState();
+  // const { data, error } = useSWR("/api/users/me", fetcher);
+  const { data, error } = useSWR("/api/users/me");
   const router = useRouter();
   useEffect(() => {
-    fetch("/api/users/me")
-      .then((response) => response.json())
-      .then((data) => {
-        if (!data.isSuccess) {
-          return router.replace("/create-account");
-        }
-        setUser(data.profile);
-      });
-  }, [router]);
-  return user;
+    if (data && !data.isSuccess) {
+      router.replace("/enter");
+    }
+  }, [data, router]);
+  return { isLoading: !data && !error, user: data?.profile };
 };
 
 export default useUser;

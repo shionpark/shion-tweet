@@ -1,6 +1,9 @@
 import Layout from "@/components/layout";
+import useUser from "@/lib/client/useUser";
 
 const Home = () => {
+  const { isLoading, user } = useUser();
+  console.log(user);
   return (
     <Layout hasTabBar title="홈">
       <div className="text-gray-900 bg-white flex flex-col w-full space-y-5">
