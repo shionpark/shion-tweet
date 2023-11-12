@@ -12,7 +12,6 @@ interface TweetsResponse {
 const Home = () => {
   const { isLoading, user } = useUser();
   const { data } = useSWR<TweetsResponse>("/api/tweets");
-  console.log(data);
 
   return (
     <Layout hasTabBar title="Tweets">
