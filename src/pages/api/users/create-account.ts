@@ -21,6 +21,8 @@ const handler = async (
       email: email,
     },
   });
+  console.log(user);
+
   if (user) {
     return res.status(409).json({
       isSuccess: false,
@@ -28,33 +30,15 @@ const handler = async (
     });
   }
 
-  const newUser = await db.$transaction(async (prisma) => {
-    try {
-      const hashedPassword = await bcrypt.hash(password, 10);
-      const createdUser = await prisma.user.create({
-        data: {
-          email,
-          name,
-          password: hashedPassword,
-        },
-      });
-      return createdUser;
-    } catch (error) {
-      console.error("Error creating user:", error);
-      return null;
-    }
+  const hashedPassword = await bcrypt.hash(password, 5);
+
+  await db.user.create({
+    data: {
+      email,
+      name,
+      password: hashedPassword,
+    },
   });
-
-  if (!newUser) {
-    return res.status(500).json({
-      isSuccess: false,
-      message: "사용자를 생성하는 도중 오류가 발생했습니다.",
-    });
-  }
-
-  req.session.user = {
-    id: newUser.id,
-  };
 
   return res.status(200).json({ isSuccess: true, message: "회원가입 완료!" });
 };

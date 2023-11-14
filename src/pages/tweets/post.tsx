@@ -30,11 +30,13 @@ const Post = () => {
 
     postTweet(data);
   };
+
   useEffect(() => {
     if (data?.isSuccess) {
       router.push(`/tweets/${data.tweet.id}`);
     }
   }, [data, router]);
+
   return (
     <div className="h-screen bg-white">
       <Layout hasTabBar title="Post">
