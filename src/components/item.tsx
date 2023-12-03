@@ -3,26 +3,26 @@ import Link from "next/link";
 interface ItemProps {
   comments: number;
   createdAt: Date;
+  email: string;
   hearts: number;
   id: number;
   text: string;
   title: string;
-  email: string;
   username: string;
 }
 
 export default function Item({
   comments,
   createdAt,
+  email,
   hearts,
   id,
   text,
   title,
-  email,
   username,
 }: ItemProps) {
   return (
-    <div className="ONE_ROW flex">
+    <div className="ITEM flex">
       <div className="L_COL_PROFILE mt-6">
         <div className="PROFILE w-12 h-12 shadow-sm border border-gray-200 bg-slate-500 rounded-full"></div>
       </div>

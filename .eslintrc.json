@@ -1,16 +1,7 @@
 {
-  "extends": [
-    "next/core-web-vitals",
-    "plugin:perfectionist/recommended-natural"
-  ],
-  "plugins": ["perfectionist"],
+  "extends": "next",
   "rules": {
-    "perfectionist/sort-objects": [
-      "error",
-      {
-        "type": "natural",
-        "order": "asc"
-      }
-    ]
+    "react/no-unescaped-entities": "off",
+    "@next/next/no-page-custom-font": "off"
   }
 }
