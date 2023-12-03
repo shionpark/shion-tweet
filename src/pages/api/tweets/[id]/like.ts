@@ -12,6 +12,12 @@ async function handler(
     session: { user },
   } = req;
 
+  if (id === undefined || id === null) {
+    return res
+      .status(400)
+      .json({ isSuccess: false, error: "ID가 누락되었습니다." });
+  }
+
   const alreadyExists = await db.like.findFirst({
     where: {
       id: +id.toString(),
@@ -44,7 +50,7 @@ async function handler(
   const isLiked = Boolean(
     await db.like.findFirst({
       where: {
-        tweetId: tweet?.id,
+        tweetId: +id,
         userId: user?.id,
       },
       select: {

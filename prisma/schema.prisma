@@ -52,9 +52,9 @@ model Like {
   id        Int      @id @default(autoincrement())
   createdAt DateTime @default(now())
   user      User     @relation(fields: [userId], references: [id])
-  userId    Int      @unique
+  userId    Int
   tweet     Tweet    @relation(fields: [tweetId], references: [id])
-  tweetId   Int      @unique
+  tweetId   Int
 
   @@index([userId])
   @@index([tweetId])
